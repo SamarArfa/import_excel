@@ -55,6 +55,10 @@ class ImportExcelController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request,[
+            'select_file' => 'required|mimes:xls,xlsx,csv'
+        ]);
+
         if($request->hasFile('select_file')) {
             $path = $request->file('select_file');
             $fileName = time() . '.' . $path->getClientOriginalExtension();
@@ -103,7 +107,7 @@ class ImportExcelController extends Controller
 
 
                                 $infoArray[] = $info->toArray();
-                                $successMsg = 'Excel Data Imported successfully.1';
+//                                $successMsg = 'Excel Data Imported successfully.1';
                             } elseif ($import_excels->batch_number == $value1[0] &&
                                 $import_excels->sponsor_number == $value1[2]
                             && $import_excels->date_of_batch == \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
@@ -111,10 +115,10 @@ class ImportExcelController extends Controller
 
 //                                $infoArray [] = $info->toArray();
 
-                                $successMsg = 'Excel Data Imported successfully.2';
+//                                $successMsg = 'Excel Data Imported successfully.2';
                             } elseif ($import_excels->batch_number == $value1[0] &&
                                 $import_excels->sponsor_number != $value1[2]) {
-                                $successMsg = 'sponsor_number error';
+                                $successMsg = 'sponsor_number error but system continue';
                             }elseif ($import_excels->batch_number == $value1[0] ) {
 
 //                                $infoArray [] = $info->toArray();
@@ -128,6 +132,8 @@ class ImportExcelController extends Controller
                 }
             }
 
+
+//*************************another solve*************
 //
 //            if (!empty($array)) {
 //
