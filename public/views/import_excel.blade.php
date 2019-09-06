@@ -2,55 +2,44 @@
 <html>
 <head>
     <title>Import Excel File in Laravel</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="app.js"></script>
+
 
 </head>
 <body ng-app="myApp" ng-controller="CRUDController">
 <br />
 
 <div class="container">
-    <h3 align="center">Import Excel File in Laravel</h3>
-    <br />
 
-                <div class="alert alert-danger" ng-if="errors.length > 0"  class="close" data-dismiss="alert" aria-label="Close">
+    <div class="container-fluid">
 
-                    <div ng-repeat="error in errors"><i class="material-icons">close</i> {{ error }}</div>
 
-                </div>
+        <div id="excelView">
 
-    <fieldset class="border" style="width: 85%;margin: auto">
-        <legend class="w-auto">Import   </legend>
-    <form method="post" enctype="multipart/form-data"
-    >
-        <input type="hidden" name="token" value="{{ csrf_token() }}">
 
-        <div class="form-group">
+            <fieldset  style="width:40em" class="border p-3 m-3">
+                <legend  class="w-auto" style="color:#000000;font-weight:bold; text-align: left">Payments statement</legend>
+                <form method="post" enctype="multipart/form-data">
+                    <div>
+                        <label>Select File for Upload</label>
 
-            <table class="table">
-                <tr>
-                    <td width="40%" align="right"><label>Select File for Upload</label></td>
-                    <td width="30">
                         <input type="file"  ng-model="select_file" id="select_file" name="select_file" />
-                    </td>
-                    <td width="30%" align="left">
+
                         <input type="submit" name="upload" ng-click="import()" class="btn btn-primary" value="Upload">
-                    </td>
-                </tr>
-                <tr>
-                    <td width="40%" align="right"></td>
-                    <td width="30"><span class="text-muted">.xls, .xslx</span></td>
-                    <td width="30%" align="left"></td>
-                </tr>
-            </table>
+
+                        <span class="text-muted">.xls, .xslx</span>
+
         </div>
     </form>
-    </fieldset>
+            </fieldset>
+        </div>
+    </div>
 
     <br />
     <div class="panel panel-default">
