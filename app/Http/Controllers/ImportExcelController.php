@@ -64,7 +64,7 @@ class ImportExcelController extends Controller
             $i = 0;
             $infoArray=array();
             $import_excelsArray=array();
-//            dd($array[0][1][0]);
+////            dd($array[0][1][0]);
             if (!empty($array)) {
 
                 foreach ($array as $key => $value) {
@@ -83,6 +83,8 @@ class ImportExcelController extends Controller
                             $import_excels->date_of_batch = \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
                                 $value1[1]));
                             $import_excels->sponsor_number = $value1[2];
+                            $mytime = Carbon::now();
+                            $import_excels->created_at=$mytime->toDateTimeString();
                             $import_excelsArray[] = $import_excels->toArray();
 
                             $info = new info();
@@ -90,35 +92,34 @@ class ImportExcelController extends Controller
                             $info->amount = $value1[4];
                             $info->coins = $value1[5];
                             $info->batch_number = $value1[0];
+//                            $mytime = Carbon\Carbon::now();
+                            $info->created_at=$mytime->toDateTimeString();
                             $infoArray[] = $info->toArray();
 
                             if ($import_excels->batch_number != $value1[0]) {
                                 $import_excels->batch_number = $value1[0];
-//                                $import_excels->date_of_batch = \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
-//                                    $value1[1]));
-//
-//                                $import_excels->sponsor_number = $value1[2];
+
                                 $import_excelsArray[] = $import_excels->toArray();
-//
-//                                $info->Beneficiary_number = $value1[3];
-//                                $info->amount = $value1[4];
-//                                $info->coins = $value1[5];
-//                                $info->batch_number = $value1[0];
+
 
                                 $infoArray[] = $info->toArray();
                                 $successMsg = 'Excel Data Imported successfully.1';
-                            } elseif ($import_excels->batch_number == $value[$i][0] &&
-                                $import_excels->sponsor_number == $value[$i][2]) {
-//                                $info->Beneficiary_number = $value[$i][3];
-//                                $info->amount = $value[$i][4];
-//                                $info->coins = $value[$i][5];
-//                                $info->batch_number = $value[$i][0];
-                                $infoArray [] = $info->toArray();
+                            } elseif ($import_excels->batch_number == $value1[0] &&
+                                $import_excels->sponsor_number == $value1[2]
+                            && $import_excels->date_of_batch == \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
+                                    $value1[1])) ) {
+
+//                                $infoArray [] = $info->toArray();
 
                                 $successMsg = 'Excel Data Imported successfully.2';
-                            } elseif ($import_excels->batch_number == $value[$i][0] &&
-                                $import_excels->sponsor_number != $value[$i][2]) {
+                            } elseif ($import_excels->batch_number == $value1[0] &&
+                                $import_excels->sponsor_number != $value1[2]) {
                                 $successMsg = 'sponsor_number error';
+                            }elseif ($import_excels->batch_number == $value1[0] ) {
+
+//                                $infoArray [] = $info->toArray();
+
+                                $successMsg = 'Excel Data Imported successfully.2';
                             }
 
                         }
@@ -127,7 +128,90 @@ class ImportExcelController extends Controller
                 }
             }
 
-            dd($import_excelsArray);
+//
+//            if (!empty($array)) {
+//
+//                foreach ($array as $key => $value) {
+//                    foreach ($value as $key1 => $value1) {
+//                        if ($value1[3] != null || $value1[2] != null || $value1[1] != null
+//                            || $value1[0] != null || $value1[4] != null || $value1[5] != null) {
+//
+//                            if ($i == 0) {
+//                                $i++;
+//                                continue;
+//                            }
+//
+//
+//                            $import_excels = new import_excels();
+//                            $import_excels->batch_number = $value1[0];
+//                            $import_excels->date_of_batch = \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
+//                                $value1[1]));
+//                            $import_excels->sponsor_number = $value1[2];
+//                            $import_excelsArray[] = $import_excels->toArray();
+//
+//                            $info = new info();
+//                            $info->Beneficiary_number = $value1[3];
+//                            $info->amount = $value1[4];
+//                            $info->coins = $value1[5];
+//                            $info->batch_number = $value1[0];
+//                            $infoArray[] = $info->toArray();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            $data1=array();
+//            $data2=array();
+//            $i=1;
+//
+//            foreach ($import_excelsArray as  $key=>$value ) {
+//                if ($key<3 && $i<3) {
+////                $i=1;
+//                    $import_excels = new import_excels();
+//                    $info = new info();
+////                    $data1[]=$import_excelsArray[$key];
+////                    $data2[]=$infoArray[$key];
+//                    $import_excels->batch_number = $import_excelsArray[$key]['batch_number'];
+//                    $import_excels->date_of_batch = $import_excelsArray[$key]['date_of_batch'];
+////                        \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
+////                        $value1[1]));
+//
+//                    $import_excels->sponsor_number = $import_excelsArray[$key]['sponsor_number'];
+//                    $data1[] = $import_excels->toArray();
+//
+//                    if ($import_excelsArray[$key]['batch_number'] != $import_excelsArray[$i]['batch_number']) {
+//                        $import_excels->batch_number = $import_excelsArray[$i]['batch_number'];
+//                        $import_excels->date_of_batch = $import_excelsArray[$i]['date_of_batch'];
+////                        \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
+////                        $value1[1]));
+//                        $import_excels->sponsor_number = $import_excelsArray[$i]['sponsor_number'];
+//                        $data1[] = $import_excels->toArray();
+//                        $info->Beneficiary_number = $infoArray[$i]['Beneficiary_number'];
+//                        $info->amount = $infoArray[$i]['amount'];
+//                        $info->coins = $infoArray[$i]['coins'];
+//                        $info->batch_number = $infoArray[$i]['batch_number'];
+//                        $data2[] = $info->toArray();
+//
+//                        $successMsg = 'Excel Data Imported successfully.1';
+//                        $i++;
+//                    } elseif ($import_excelsArray[$key]['batch_number'] == $import_excelsArray[$i]['batch_number'] &&
+//                        $import_excelsArray[$key]['sponsor_number'] == $value[$i]['sponsor_number']) {
+//
+//                        $info->Beneficiary_number = $infoArray[$i]['Beneficiary_number'];
+//                        $info->amount = $infoArray[$i]['amount'];
+//                        $info->coins = $infoArray[$i]['coins'];
+//                        $info->batch_number = $infoArray[$i]['batch_number'];
+//                        $data2[] = $info->toArray();
+//                        $successMsg = 'Excel Data Imported successfully.2';
+//                        $i++;
+//                    } elseif ($import_excelsArray[$key]['batch_number'] == $import_excelsArray[$i]['batch_number'] &&
+//                        $import_excelsArray[$key]['sponsor_number'] != $import_excelsArray[$i]['sponsor_number']) {
+//                        $successMsg = 'sponsor_number error';
+//                        $i++;
+//                    }
+//                }
+//            }
+//            dd($data2);
                 foreach ($import_excelsArray as  $value ){
 
       DB::table('import_excels')->insert($value );
